@@ -1,0 +1,12 @@
+https://leetcode.com/problems/sales-person/
+
+-- Write your PostgreSQL query statement below
+-- step 1: get sales_id order at RED in Orders table
+-- step 2: get name sales not exists in step 1 
+with salesIdOrderRED as (
+    select Orders.sales_id from Orders
+    join Company on Company.com_id = Orders.com_id and Company.name = 'RED'
+)
+select SalesPerson.name from SalesPerson
+left join salesIdOrderRED on salesIdOrderRED.sales_id = SalesPerson.sales_id
+where salesIdOrderRED.sales_id is null;
