@@ -1,0 +1,9 @@
+https://leetcode.com/problems/triangle-judgement/
+
+-- Write your PostgreSQL query statement below
+select *,
+    case
+        when x+y+z > 2*GREATEST(x,y,z) then 'Yes'
+        else 'No'
+    end as triangle
+    from Triangle;
