@@ -1,0 +1,20 @@
+https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+
+func removeDuplicates(nums []int) int {
+    key := make(map[int]bool)
+    var list []int
+    for _, num := range nums {
+        if _, ok := key[num]; !ok {
+            key[num] = true
+            list = append(list, num)
+        }
+    }
+    
+    sort.Slice(list, func(i, j int) bool {
+        return list[i] < list[j]
+    })
+    for i := range list {
+        nums[i] = list[i]
+    }
+    return len(key)
+}
