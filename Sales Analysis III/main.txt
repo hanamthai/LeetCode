@@ -1,0 +1,18 @@
+--https://leetcode.com/problems/sales-analysis-iii/
+
+-- Write your PostgreSQL query statement below
+-- Idea:
+-- Step 1: Get the product_id that do not meet the condition
+-- (cause it will have product to sale before or after this timelines so i'll remove that exception)
+-- Step 2: Get request variable in Product table that does not exsits in step 1
+-- IF will have case that the product never sale before so i have to left join 2 table
+WITH pro_except AS (
+    SELECT p.product_id FROM Product p
+    LEFT JOIN Sales s ON p.product_id = s.product_id
+    WHERE sale_date > '2019-03-31' OR sale_date < '2019-01-01' OR s.product_id IS NULL
+)
+
+SELECT p.product_id, p.product_name FROM Product p
+WHERE p.product_id NOT IN (
+    SELECT * FROM pro_except
+)
