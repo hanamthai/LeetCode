@@ -1,0 +1,11 @@
+-- https://leetcode.com/problems/user-activity-for-the-past-30-days-i/
+-- Write your PostgreSQL query statement below
+WITH GroupUserWithDay AS (
+    SELECT user_id, activity_date FROM Activity
+    GROUP BY user_id, activity_date
+)
+
+SELECT activity_date as day, count(user_id) as active_users FROM GroupUserWithDay
+GROUP BY activity_date
+HAVING activity_date <= '2019-07-27' and activity_date >'2019-06-27'
+ORDER BY activity_date ASC
