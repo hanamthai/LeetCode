@@ -1,0 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+func search(root *TreeNode, i *[]int) {
+    if root != nil {
+        search(root.Left, i)
+        *i = append(*i, root.Val)
+        search(root.Right, i)
+    }
+} 
+
+func inorderTraversal(root *TreeNode) []int {
+    var i []int
+    if root == nil {
+        return i
+    }
+    search(root, &i)
+    return i
+}
