@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+
+func addNewNodeToSatisfySorted(head *ListNode, value int) *ListNode {
+    newNode := &ListNode{Val: value}
+    if head == nil || head.Val > value {
+        newNode.Next = head
+        return newNode
+    }
+    current := head
+    for current.Next != nil && current.Next.Val < value {
+        current = current.Next
+    }
+    newNode.Next = current.Next
+    current.Next = newNode
+    return head
+}
+
+func printLinkedList(list *ListNode) {
+    for list != nil {
+        fmt.Printf("%d -> ", list.Val)
+        list = list.Next
+    }
+    fmt.Println("nil")
+}
+
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+    if list1 == nil {
+        return list2
+    }
+    if list2 == nil {
+        return list1
+    }
+    resultListNode := list1
+    current := list2
+    for current != nil {
+        resultListNode = addNewNodeToSatisfySorted(resultListNode,current.Val)
+        current = current.Next
+    }
+    printLinkedList(resultListNode)
+    return resultListNode
+}
