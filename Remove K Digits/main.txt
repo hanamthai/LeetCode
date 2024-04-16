@@ -1,0 +1,27 @@
+func removeKdigits(num string, k int) string {
+	if len(num) == k {
+		return "0"
+	}
+	stack := make([]rune, 0)
+	for _, val := range num {
+		for len(stack) > 0 && stack[len(stack)-1] > val && k > 0 {
+			stack = stack[:len(stack)-1]
+			k--
+		}
+		stack = append(stack, val)
+	}
+
+	// Xử lý trường hợp `k` vẫn còn dư
+	for k > 0 && len(stack) > 0 {
+		stack = stack[:len(stack)-1]
+		k--
+	}
+
+	// Tạo chuỗi kết quả
+	result := strings.TrimLeft(string(stack), "0")
+
+	if result == "" {
+		return "0"
+	}
+	return result
+}
