@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+func smallestFromLeaf(root *TreeNode) string {
+    ans := ""
+    var dfs func(root *TreeNode, text string)
+    dfs = func(root *TreeNode, text string) {
+        if root == nil {
+            return
+        }
+        text = string(rune(root.Val + 97))+text
+        fmt.Println(text, " ", ans)
+        if root.Right == nil && root.Left == nil {
+            if ans == "" || ans > text {
+            ans = text
+        }
+        return
+        }
+        dfs(root.Left, text)
+        dfs(root.Right, text)
+    } 
+    dfs(root, "")
+    return ans
+}
